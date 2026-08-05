@@ -22,8 +22,9 @@ import com.eime.devices.ui.theme.Typography
 
 
 @Composable
-fun DeviceView(device: Device) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
+fun DeviceItemView(device: Device) {
+    Row(verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.padding(end = 16.dp, top = 8.dp, bottom = 8.dp, )) {
         Image(
             imageVector = ImageVector.vectorResource(id = R.drawable.ic_launcher_foreground),
             contentDescription = "Wall Art Illustration",
@@ -31,7 +32,23 @@ fun DeviceView(device: Device) {
             modifier = Modifier.padding(horizontal = 16.dp)
         )
         Column() {
-            Text(text= device.name, style = Typography.headlineMedium)
+            Text(text= device.name,
+                style = Typography.headlineMedium
+            )
+            if(device.data?.color != null) {
+                Text(
+                    text= device.data.color,
+                    style = Typography.bodyMedium
+                )
+            }
+
+            if(device.data?.capacity != null) {
+                Text(
+                    text= device.data.capacity,
+                    style = Typography.bodyMedium
+                )
+            }
+
             Text(text= device.data?.color ?:"-", style = Typography.bodyMedium)
             Text(text= device.data?.capacity ?:"-", style = Typography.bodyMedium)
 
@@ -45,6 +62,6 @@ fun DeviceView(device: Device) {
 @Composable
 fun DeviceItemPreview(){
     DevicesTheme() {
-        DeviceView(device = Device(1, "Nexus", Specs("Black", "64GB")))
+        DeviceItemView(device = Device(1, "Nexus", Specs("Black", "64GB")))
     }
 }
