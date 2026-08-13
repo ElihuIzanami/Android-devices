@@ -74,11 +74,9 @@ class MainActivity : ComponentActivity() {
         var devices: List<Device>? = null
         lifecycleScope.launch {
             //Ejecucion del servicio
-            devices = service.getAllDevices()
-        }.invokeOnCompletion {
-            //Devolvemos lo del wb service
+            devices = service.getAllDevices() //Devolvemos lo del wb service
             onResult(devices)
-        }
+        }/*.invokeOnCompletion { onResult(devices) }*/
     }
 
     //Funcion para solo traer un objeto Device del wb-service
