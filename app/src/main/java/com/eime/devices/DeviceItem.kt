@@ -49,6 +49,13 @@ fun DeviceItemView(device: Device) {
                 )
             }
 
+            if(device.data?.price != null) {
+                Text(
+                    text= "$${device.data.price}",
+                    style = Typography.bodyMedium
+                )
+            }
+
             Text(text= device.data?.color ?:"-", style = Typography.bodyMedium)
             Text(text= device.data?.capacity ?:"-", style = Typography.bodyMedium)
 
@@ -62,6 +69,6 @@ fun DeviceItemView(device: Device) {
 @Composable
 fun DeviceItemPreview(){
     DevicesTheme() {
-        DeviceItemView(device = Device(1, "Nexus", Specs("Black", "64GB")))
+        DeviceItemView(device = Device(1, "Nexus", Specs("Black", "64GB", price = 145.15f)))
     }
 }

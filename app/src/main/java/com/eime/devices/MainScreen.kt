@@ -39,7 +39,7 @@ fun MainView(modifier: Modifier, devices: List<Device>) {
 fun MainPreview() {
     DevicesTheme {
         MainView(Modifier.padding(top=24.dp), devices = listOf(
-            Device(1, "Nexus", Specs("Black", "64GB")),
+            Device(1, "Nexus", Specs("Black", "64GB", price = 149.99f)),
             Device(2, "Galaxy", null))
         )
     }

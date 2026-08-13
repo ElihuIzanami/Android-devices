@@ -32,14 +32,17 @@ class MainActivity : ComponentActivity() {
                 //Variable para ingresar al activity de los dispositivos
                 var devices by remember {
                     mutableStateOf(listOf<Device>()) }
-                //Mandao a llamar la funcion
+                //Mando a llamar la funcion que trae la lista de Objetos Device
                 getDevices { result ->
                     devices = result
                 }
+                //Mando a llamar solo un Objeto de Device
+                /*getDeviceOne { result ->
+                    devices = result
+                }*/
 
 
-
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     MainView(Modifier.padding(innerPadding),
                         devices = devices )
 
@@ -48,21 +51,37 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    //Funcion de Orden superior para trael del we services
-    private fun getDevices(onResult:(List<Device>) -> Unit) {
+    //Funcion de Orden superior para traer una lista de Objetos Device del wb-services
+    fun getDevices(onResult:(List<Device>) -> Unit) {
         //Configuracion base de retrofit
         val retrofit = Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-
         //Creacion del servicio
         val service = retrofit.create(DeviceService::class.java)
         lifecycleScope.launch {
             //Ejecucion del servicio
-            val devices = service.getAllObject()
+            val devices = service.getAllDevices()
             //Devolvemos lo del wb service
             onResult(devices)
+        }
+    }
+
+    //Funcion para solo traer un objeto Device del wb-service
+    fun getDeviceOne(onResult:(List<Device>) -> Unit) {
+        //Configuracion base de retrofit
+        val retrofit = Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        //Creacion del servicio
+        val service = retrofit.create(DeviceService::class.java)
+        lifecycleScope.launch {
+            //Ejecucion del servicio
+            val device = service.getDevice()
+            //Devolvemos lo del wb service
+            onResult(listOf(device))
         }
     }
 
